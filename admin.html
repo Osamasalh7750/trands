@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لوحة تحكم المدير | عطورات ترند</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" href="assets/favicon.png">
+
+  <!-- Google Fonts: Cairo -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Custom Luxury Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ==================== ADMIN TOP NAVBAR ==================== -->
+  <header class="admin-navbar">
+    <div class="container admin-nav-container">
+      
+      <!-- Brand & Status -->
+      <a href="index.html" class="brand-logo">
+        <img src="assets/logo.png" alt="عطورات ترند" class="brand-logo-img">
+        <div>
+          <h2 class="gold-text" style="font-size: 1.25rem; font-weight: 800;">عطورات ترند</h2>
+          <span class="admin-badge"><i class="fas fa-shield-alt"></i> لوحة الإدارة السحابية</span>
+        </div>
+      </a>
+
+      <!-- User Info & Navigation Actions -->
+      <div class="admin-nav-left">
+        <div style="display: flex; align-items: center; gap: 8px; color: var(--text-secondary); font-size: 0.85rem;">
+          <i class="fas fa-user-circle" style="color: var(--gold-primary); font-size: 1.1rem;"></i>
+          <span id="adminUserEmail">مدير المتجر</span>
+        </div>
+
+        <a href="index.html" class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.85rem;">
+          <i class="fas fa-store"></i> واجهة المتجر
+        </a>
+
+        <button id="logoutBtn" class="btn btn-danger" style="padding: 0.5rem 1rem; font-size: 0.85rem;">
+          <i class="fas fa-sign-out-alt"></i> خروج
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ==================== MAIN DASHBOARD ==================== -->
+  <main class="container" style="padding-top: 2rem; padding-bottom: 4rem;">
+
+    <!-- KPI Statistics Grid -->
+    <section class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-wine-bottle"></i></div>
+        <div class="stat-info">
+          <h3 id="statTotalPerfumes">0</h3>
+          <p>إجمالي العطورات</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-tags"></i></div>
+        <div class="stat-info">
+          <h3 id="statDiscountedPerfumes">0</h3>
+          <p>عطورات عليها خصم</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-images"></i></div>
+        <div class="stat-info">
+          <h3 id="statTotalBanners">0</h3>
+          <p>البنرات والعروض النشطة</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-coins"></i></div>
+        <div class="stat-info">
+          <h3 id="statAvgPrice">0 ر.س</h3>
+          <p>متوسط سعر العطور</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Admin Navigation Tabs -->
+    <div class="admin-tabs">
+      <button class="admin-tab active" data-target="perfumesSection">
+        <i class="fas fa-wine-bottle"></i> إدارة العطور (جدول perfumes)
+      </button>
+      <button class="admin-tab" data-target="bannersSection">
+        <i class="fas fa-ad"></i> إدارة العروض المتحركة (جدول banners)
+      </button>
+    </div>
+
+    <!-- ==================== TAB 1: PERFUMES MANAGEMENT ==================== -->
+    <div id="perfumesSection" class="tab-pane">
+      
+      <!-- Add Perfume Form Card -->
+      <div class="admin-panel-card">
+        <div class="panel-card-header">
+          <div>
+            <h3><i class="fas fa-plus-circle" style="color: var(--gold-primary);"></i> إضافة عطر ملكي جديد</h3>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 4px;">
+              يتم حفظ بيانات العطر سحابياً في جدول perfumes ورفع الصورة إلى مساحة التخزين
+            </p>
+          </div>
+        </div>
+
+        <form id="addPerfumeForm">
+          
+          <!-- Row 1: Name, Category, Price, Discount -->
+          <div class="form-grid-4">
+            <div class="form-group">
+              <label for="pName">اسم العطر: *</label>
+              <input type="text" id="pName" class="form-control" placeholder="مثال: ترند رويال أورورا" required>
+            </div>
+
+            <div class="form-group">
+              <label for="pCategory">التصنيف: *</label>
+              <select id="pCategory" class="form-control" required>
+                <option value="نيش">عطور نيش</option>
+                <option value="رجالي">عطور رجالية</option>
+                <option value="نسائي">عطور نسائية</option>
+                <option value="للجنسين">للجنسين</option>
+                <option value="شرقي">شرقي وعود</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="pPrice">السعر الأساسي (ر.س): *</label>
+              <input type="number" id="pPrice" class="form-control" placeholder="550" min="1" step="0.5" required>
+            </div>
+
+            <div class="form-group">
+              <label for="pDiscount">نسبة الخصم (% إن وجدت):</label>
+              <input type="number" id="pDiscount" class="form-control" placeholder="0" min="0" max="99" value="0">
+            </div>
+          </div>
+
+          <!-- Row 2: Offer Text, Size, Type, Badge Tag -->
+          <div class="form-grid-4">
+            <div class="form-group">
+              <label for="pOffer">نص العرض الترويجي (اختياري):</label>
+              <input type="text" id="pOffer" class="form-control" placeholder="مثال: خصم خاص + شحن مجاني">
+            </div>
+
+            <div class="form-group">
+              <label for="pSize">حجم العبوة: *</label>
+              <input type="text" id="pSize" class="form-control" placeholder="100 مل" value="100 مل" required>
+            </div>
+
+            <div class="form-group">
+              <label for="pType">التركيز: *</label>
+              <select id="pType" class="form-control" required>
+                <option value="Extrait de Parfum">Extrait de Parfum (مركز جداً)</option>
+                <option value="Eau de Parfum (EDP)" selected>Eau de Parfum (EDP)</option>
+                <option value="Parfum">Parfum</option>
+                <option value="Eau de Toilette (EDT)">Eau de Toilette (EDT)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="pBadge">شارة العطر (Badge):</label>
+              <input type="text" id="pBadge" class="form-control" placeholder="الأكثر مبيعاً، إصدار حصري، جديد">
+            </div>
+          </div>
+
+          <!-- Row 3: Longevity, Sillage, Occasion -->
+          <div class="form-grid-3">
+            <div class="form-group">
+              <label for="pLongevity">نسبة الثبات (%): *</label>
+              <input type="number" id="pLongevity" class="form-control" min="1" max="100" value="92" required>
+            </div>
+
+            <div class="form-group">
+              <label for="pSillage">نسبة الفوحان (%): *</label>
+              <input type="number" id="pSillage" class="form-control" min="1" max="100" value="88" required>
+            </div>
+
+            <div class="form-group">
+              <label for="pOccasion">المناسبة المفضلة: *</label>
+              <input type="text" id="pOccasion" class="form-control" placeholder="أمسيات ملكية، مناسبات خاصة، يومي راقي" required>
+            </div>
+          </div>
+
+          <!-- Row 4: Olfactory Pyramid (Top, Heart, Base) -->
+          <div class="form-grid-3">
+            <div class="form-group">
+              <label for="pTopNotes">قمة العطر (Top Notes): *</label>
+              <input type="text" id="pTopNotes" class="form-control" placeholder="برغموت، زعفران، هيل..." required>
+            </div>
+
+            <div class="form-group">
+              <label for="pHeartNotes">قلب العطر (Heart Notes): *</label>
+              <input type="text" id="pHeartNotes" class="form-control" placeholder="ياسمين، ورد بلغاري، جلد فاخر..." required>
+            </div>
+
+            <div class="form-group">
+              <label for="pBaseNotes">قاعدة العطر (Base Notes): *</label>
+              <input type="text" id="pBaseNotes" class="form-control" placeholder="عود كمبودي، عنبر رمادي، صندل..." required>
+            </div>
+          </div>
+
+          <!-- Row 5: Marketing Description -->
+          <div class="form-group">
+            <label for="pDescription">الوصف التسويقي للعطر: *</label>
+            <textarea id="pDescription" class="form-control" rows="3" placeholder="اكتب وصفاً جذاباً يعكس فخامة العطر ونفحاته وأثره..." required></textarea>
+          </div>
+
+          <!-- Row 6: Image Upload to Supabase Storage -->
+          <div class="form-group">
+            <label>صورة العطر (رفع سحابي إلى Supabase Storage): *</label>
+            
+            <div id="perfumeDropzone" class="image-upload-dropzone">
+              <i class="fas fa-cloud-upload-alt upload-icon"></i>
+              <h4>اسحب الصورة هنا أو انقر للاختيار</h4>
+              <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;">PNG, JPG, WEBP بحد أقصى 5 ميجابايت</p>
+              <input type="file" id="perfumeFileInput" accept="image/*" style="display: none;">
+            </div>
+
+            <!-- Preview Image -->
+            <div id="perfumeImgPreviewWrap" class="upload-preview-container" style="display: none;">
+              <img id="perfumeImgPreview" src="" alt="معاينة" class="upload-preview-img">
+              <button type="button" id="removePerfumeImgBtn" class="remove-img-btn" title="حذف الصورة"><i class="fas fa-times"></i></button>
+            </div>
+
+            <!-- Alternative Image URL -->
+            <div style="margin-top: 0.75rem;">
+              <label for="pImageUrl" style="font-size: 0.8rem; color: var(--text-muted);">أو أدخل رابط الصورة المباشر (URL):</label>
+              <input type="url" id="pImageUrl" class="form-control" placeholder="https://example.com/perfume.jpg" style="padding: 0.55rem 1rem; font-size: 0.85rem;">
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <div style="margin-top: 1.5rem; text-align: left;">
+            <button type="submit" id="savePerfumeBtn" class="btn btn-primary" style="padding: 0.85rem 2.5rem;">
+              <i class="fas fa-save"></i> <span id="savePerfumeBtnText">حفظ ونشر العطر سحابياً</span>
+            </button>
+          </div>
+
+        </form>
+      </div>
+
+      <!-- Perfumes List Table Card -->
+      <div class="admin-panel-card">
+        <div class="panel-card-header">
+          <div>
+            <h3><i class="fas fa-list-ul" style="color: var(--gold-primary);"></i> قائمة العطور الحالية</h3>
+            <p style="color: var(--text-muted); font-size: 0.85rem;">يمكنك تعديل بيانات أي عطر أو حذفه بنقرة زر</p>
+          </div>
+
+          <div style="max-width: 280px; width: 100%;">
+            <input type="text" id="adminPerfumesSearch" class="form-control" placeholder="بحث في العطور..." style="padding: 0.5rem 1rem; font-size: 0.85rem;">
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>الصورة</th>
+                <th>اسم العطر</th>
+                <th>التصنيف</th>
+                <th>السعر الأساسي</th>
+                <th>الخصم</th>
+                <th>السعر الفعلي</th>
+                <th>الثبات / الفوحان</th>
+                <th>الإجراءات</th>
+              </tr>
+            </thead>
+            <tbody id="adminPerfumesTableBody">
+              <!-- Rendered by js/admin.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ==================== TAB 2: BANNERS MANAGEMENT ==================== -->
+    <div id="bannersSection" class="tab-pane" style="display: none;">
+      
+      <!-- Add Banner Card -->
+      <div class="admin-panel-card">
+        <div class="panel-card-header">
+          <div>
+            <h3><i class="fas fa-plus-circle" style="color: var(--gold-primary);"></i> إضافة بنر إعلاني جديد</h3>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 4px;">
+              يتم حفظ البنر في جدول banners ويظهر مباشرة في شريط العروض المتحركة بالواجهة الرئيسية
+            </p>
+          </div>
+        </div>
+
+        <form id="addBannerForm">
+          
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label for="bTitle">عنوان البنر الرئيسي: *</label>
+              <input type="text" id="bTitle" class="form-control" placeholder="مثال: تشكيلة النيش الملكية الفاخرة" required>
+            </div>
+
+            <div class="form-group">
+              <label for="bTag">شارة البنر: *</label>
+              <input type="text" id="bTag" class="form-control" placeholder="مثال: عرض خاص، إصدار محدود" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="bSubtitle">الوصف الفرعي للبنر: *</label>
+            <input type="text" id="bSubtitle" class="form-control" placeholder="عطور ترند الفاخرة مصممة بنفحات تروي حكايات المجد والرقي..." required>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label for="bButtonText">نص زر الطلب: *</label>
+              <input type="text" id="bButtonText" class="form-control" placeholder="اطلب الآن عبر الواتساب" value="اطلب الآن عبر الواتساب" required>
+            </div>
+
+            <div class="form-group">
+              <label for="bWhatsAppMsg">رسالة الواتساب المخصصة: *</label>
+              <input type="text" id="bWhatsAppMsg" class="form-control" placeholder="مرحباً عطورات ترند، أود الاستفسار عن عرض..." required>
+            </div>
+          </div>
+
+          <!-- Banner Image -->
+          <div class="form-group">
+            <label>صورة خلفية البنر (رفع سحابي أو رابط): *</label>
+            
+            <div id="bannerDropzone" class="image-upload-dropzone">
+              <i class="fas fa-image upload-icon"></i>
+              <h4>اسحب صورة البنر العريضة هنا</h4>
+              <p style="font-size: 0.8rem; color: var(--text-muted);">يفضل قياس عريض (مثل 1600x600)</p>
+              <input type="file" id="bannerFileInput" accept="image/*" style="display: none;">
+            </div>
+
+            <!-- Preview Image -->
+            <div id="bannerImgPreviewWrap" class="upload-preview-container" style="display: none;">
+              <img id="bannerImgPreview" src="" alt="معاينة" class="upload-preview-img" style="max-width: 240px; max-height: 100px;">
+              <button type="button" id="removeBannerImgBtn" class="remove-img-btn"><i class="fas fa-times"></i></button>
+            </div>
+
+            <div style="margin-top: 0.75rem;">
+              <label for="bImageUrl" style="font-size: 0.8rem; color: var(--text-muted);">أو أدخل رابط صورة البنر:</label>
+              <input type="url" id="bImageUrl" class="form-control" placeholder="https://images.unsplash.com/..." style="padding: 0.55rem 1rem; font-size: 0.85rem;">
+            </div>
+          </div>
+
+          <div style="margin-top: 1.5rem; text-align: left;">
+            <button type="submit" id="saveBannerBtn" class="btn btn-primary" style="padding: 0.85rem 2.5rem;">
+              <i class="fas fa-save"></i> <span id="saveBannerBtnText">حفظ البنر سحابياً</span>
+            </button>
+          </div>
+
+        </form>
+      </div>
+
+      <!-- Existing Banners List -->
+      <div class="admin-panel-card">
+        <div class="panel-card-header">
+          <h3><i class="fas fa-images" style="color: var(--gold-primary);"></i> البنرات الترويجية الحالية</h3>
+        </div>
+
+        <div class="table-responsive">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>المعاينة</th>
+                <th>العنوان</th>
+                <th>الشارة</th>
+                <th>نص الزر</th>
+                <th>رسالة الواتساب</th>
+                <th>الإجراءات</th>
+              </tr>
+            </thead>
+            <tbody id="adminBannersTableBody">
+              <!-- Rendered by js/admin.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- ==================== EDIT PERFUME MODAL ==================== -->
+  <div id="editPerfumeModal" class="modal-backdrop">
+    <div class="modal-container" style="max-width: 780px;">
+      <button id="closeEditModalBtn" class="modal-close-btn"><i class="fas fa-times"></i></button>
+      
+      <div style="padding: 2rem;">
+        <h3 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 1.5rem;" class="gold-text">
+          <i class="fas fa-edit"></i> تعديل بيانات العطر
+        </h3>
+
+        <form id="editPerfumeForm">
+          <input type="hidden" id="editPId">
+
+          <div class="form-grid-3">
+            <div class="form-group">
+              <label for="editPName">اسم العطر: *</label>
+              <input type="text" id="editPName" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label for="editPCategory">التصنيف: *</label>
+              <select id="editPCategory" class="form-control" required>
+                <option value="نيش">عطور نيش</option>
+                <option value="رجالي">عطور رجالية</option>
+                <option value="نسائي">عطور نسائية</option>
+                <option value="للجنسين">للجنسين</option>
+                <option value="شرقي">شرقي وعود</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="editPPrice">السعر الأساسي: *</label>
+              <input type="number" id="editPPrice" class="form-control" required>
+            </div>
+          </div>
+
+          <div class="form-grid-3">
+            <div class="form-group">
+              <label for="editPDiscount">نسبة الخصم %:</label>
+              <input type="number" id="editPDiscount" class="form-control" min="0" max="99">
+            </div>
+            <div class="form-group">
+              <label for="editPSize">الحجم:</label>
+              <input type="text" id="editPSize" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label for="editPType">التركيز:</label>
+              <input type="text" id="editPType" class="form-control" required>
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label for="editPOffer">نص العرض الترويجي:</label>
+              <input type="text" id="editPOffer" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="editPBadge">شارة العطر:</label>
+              <input type="text" id="editPBadge" class="form-control">
+            </div>
+          </div>
+
+          <div class="form-grid-3">
+            <div class="form-group">
+              <label for="editPTopNotes">قمة العطر:</label>
+              <input type="text" id="editPTopNotes" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label for="editPHeartNotes">قلب العطر:</label>
+              <input type="text" id="editPHeartNotes" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label for="editPBaseNotes">قاعدة العطر:</label>
+              <input type="text" id="editPBaseNotes" class="form-control" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="editPDescription">الوصف:</label>
+            <textarea id="editPDescription" class="form-control" rows="2" required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="editPImage">رابط صورة العطر:</label>
+            <input type="url" id="editPImage" class="form-control" required>
+          </div>
+
+          <div style="margin-top: 1.5rem; display: flex; gap: 1rem; justify-content: flex-end;">
+            <button type="button" onclick="closeEditModal()" class="btn btn-outline">إلغاء</button>
+            <button type="submit" id="updatePerfumeBtn" class="btn btn-primary">
+              <i class="fas fa-check"></i> حفظ التعديلات
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Supabase Official JS Library (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- Admin Application Script -->
+  <script src="js/admin.js"></script>
+</body>
+</html>
