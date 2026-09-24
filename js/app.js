@@ -117,7 +117,7 @@ function renderBanners() {
   bannersSection.style.display = "block";
 
   container.innerHTML = allBanners.map((b, idx) => `
-    <div class="banner-slide" style="transform: translateX(${idx * 100}%);">
+    <div class="banner-slide" >
       <img src="${b.image}" alt="${b.title}" class="banner-slide-bg" onerror="this.src='https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&w=1600&q=80'">
       <div class="banner-slide-overlay"></div>
       <div class="banner-content">
